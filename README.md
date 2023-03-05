@@ -8,7 +8,7 @@ Can extract data from multiple pages
 Saves data in CSV format
 
 ## Installation
-Clone this repository: git clone https://github.com/your-username/flipkart-scraper.git
+Clone this repository: git clone https://github.com/Sachinsen1295/Flipkart_scrapper.git
 Install the required packages: pip install -r requirements.txt
 
 ## Usage
