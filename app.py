@@ -2,9 +2,11 @@ from flask import Flask
 from flask import Flask, render_template, request,jsonify
 from flask_cors import CORS,cross_origin
 import requests
+import logging
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen as uReq
 
+logging.basicConfig(filename="Scrapper.log", level= logging.INFO)
 app = Flask(__name__)
 
 @app.route("/", methods = ["GET"])
@@ -43,6 +45,7 @@ def index():
 
                 except:
                     name = 'No Name'
+                    logging.info(name)
 
                 try:
                     #rating.encode(encoding='utf-8')
@@ -51,6 +54,7 @@ def index():
 
                 except:
                     rating = 'No Rating'
+                    logging.info(rating)
 
                 try:
                     #commentHead.encode(encoding='utf-8')
@@ -58,19 +62,21 @@ def index():
 
                 except:
                     commentHead = 'No Comment Heading'
+                    logging.info(commentHead)
                 try:
                     comtag = commentbox.div.div.find_all('div', {'class': ''})
                     #custComment.encode(encoding='utf-8')
                     custComment = comtag[0].div.text
                 except Exception as e:
-                    print("Exception while creating dictionary: ",e)
+                    logging.info(e)
 
                 mydict = {"Product": searchString, "Name": name, "Rating": rating, "CommentHead": commentHead,
                           "Comment": custComment}
                 reviews.append(mydict)
+            logging.info("log my final result {}".format(reviews))
             return render_template('results.html', reviews=reviews[0:(len(reviews)-1)])
         except Exception as e:
-            print('The Exception message is: ',e)
+            logging.info(e)
             return 'something is wrong'
     # return render_template('results.html')
 
